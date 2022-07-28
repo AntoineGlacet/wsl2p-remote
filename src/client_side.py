@@ -9,7 +9,7 @@ from utils import replace_line_with, search_string_in_file
 
 # variables import from .env file
 # should be in script arg?
-DOTENV_FILE = Path("/home/antoine/projects/startup/.env")
+DOTENV_FILE = Path(__file__).parent / ".." / ".env"
 config = Config(RepositoryEnv(DOTENV_FILE))
 
 win_host = config("SERVER_WIN_HOST")
