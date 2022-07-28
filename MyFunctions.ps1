@@ -1,3 +1,5 @@
+# file to be pasted to client windows to send wake on lan packet
+
 function Invoke-WakeOnLan {
     param
     (
