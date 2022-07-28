@@ -16,25 +16,25 @@ From server-side:
 
 
 ## Prerequesite
-1. install wakeonlan
+install wakeonlan
 `sudo apt install wakeolan`
 
-1. set windows local machine execution to RemoteSigned
+set windows local machine execution to RemoteSigned
 (req. admin rights to change permession)
 `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine`
 
-2. active open-ssh on windows enable and register pulic keys
-
-bug: delete weird line from ssh_config file (at the end)
-
-task sheduler for starting wsl
-
-
+intall open-ssh on windows&linux enable and register pulic keys, make sure service start (wsl.conf boot and Powershell command)
+bug: delete weird line from ssh_config file (at the end) on windows for public key login to not fail
+task sheduler for starting wsl ==> does not work yet
 add wake on lan to functions on client-side host windows
 
+3. add server-side.py to wsl.conf `[boot]` category
 
 ## Why it sucks
 
 1. need admin privilege on both client and server to setup (not to connect)
 2. go through a lot of steps and things to do something simple
 
+## to do
+clean, document, make it usable by someone in same use case rather simply.
+deal with the env, dependency and packaging...
