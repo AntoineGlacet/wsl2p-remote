@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wsl2p_remote"
+version = "0.0.1"
+authors = [
+  { name="Antoine Glacet", email="antoine.glacet@gmail.com" },
+]
+description="remote WakeOnLan and update WSL2preview ip"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU GPLv3",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+wsl2p-remote = "wsl2p_remote.main:main"
+
+[project.urls]
+"Homepage" = "https://github.com/AntoineGlacet/wsl2p-remote"
+"Bug Tracker" = "https://github.com/AntoineGlacet/wsl2p-remote/issues"

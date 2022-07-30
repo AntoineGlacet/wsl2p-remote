@@ -2,6 +2,7 @@ from argparse import ArgumentParser, Namespace
 
 from wsl2p_remote.client_side import run
 from wsl2p_remote.install import install, uninstall
+from wsl2p_remote.server_side import update
 
 
 class MyParser(ArgumentParser):
@@ -41,6 +42,13 @@ def main():
         help="send WOL packet and update server ip",
     )
     parser_run.set_defaults(func=run)
+
+    # update
+    parser_update = subparsers.add_parser(
+        "update",
+        help="update wsl_server ip to server .ssh/config",
+    )
+    parser_update.set_defaults(func=update)
 
     args = parser.parse_args()
     args.func(args)
