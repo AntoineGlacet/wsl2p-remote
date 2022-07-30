@@ -1,10 +1,9 @@
-#! /home/antoine/miniconda3/envs/wsl2remote/bin/python3
 import subprocess
 from pathlib import Path
 
 from decouple import Config, RepositoryEnv
 
-from utils import replace_line_with, search_string_in_file
+from wsl2p_remote.utils import replace_line_with, search_string_in_file
 
 # variables import from .env file
 # should be in script arg?

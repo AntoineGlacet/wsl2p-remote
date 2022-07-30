@@ -2,18 +2,12 @@
 
 ## description
 
-scripts to connect WSl => WSL preview with ssh
+Workaroud to connect remotely to WSL2-preview without touching the host PC
 
-From client-side:
-1. Wake-on-lan server
-2. Wait server hostname ip update
-3. Update client %USERPROFILE%/.ssh/config file
-
-From server-side:
-1. at WSL start
-2. update server %USERPROFILE%/.ssh/config file
-
-
+1. send wake on lan magic packets to host PC
+2. host PC starts WSL2
+3. host PC WSL2 update it hostname in /.ssh/config
+4. client PC ssh to host win and updates its /.ssh/config with up to date info from host
 
 ## Prerequesite
 install wakeonlan
