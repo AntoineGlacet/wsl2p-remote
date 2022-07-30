@@ -2,8 +2,10 @@
 import subprocess
 from pathlib import Path
 from shlex import quote
+from time import sleep
 
 from decouple import Config, RepositoryEnv
+from tqdm import trange
 
 from utils import replace_line_with, search_string_in_file
 
@@ -19,6 +21,9 @@ server_win_user = config("SERVER_WIN_USER")
 server_win_ip = config("SERVER_WIN_IP")
 server_win_mac = config("SERVER_WIN_MAC")
 
+rpi_ip = config("RPI_IP")
+rpi_user = config("RPI_USER")
+
 server_wsl_user = config("SERVER_WSL_USER")
 client_win_user = config("CLIENT_WIN_USER")
 
@@ -27,10 +32,24 @@ ssh_config_server = r"C:\Users\{}\.ssh\config".format(
     server_win_user,
 )  # can't use f-string with backslash
 
+sleep_time = int(config("SLEEP_TIME"))
+sleep_increment = 0.1
+
 hostname_server_win = f"{server_win_user}@{server_win_ip}"
+hostname_rpi = f"{rpi_user}@{rpi_ip}"
 
 # send WakeOnLan through client-side windows host
-subprocess.run(["powershell.exe", "Invoke-WakeOnLan", server_win_mac])
+# requires port forwarding...
+# subprocess.run(["powershell.exe", "Invoke-WakeOnLan", server_win_mac])
+
+# use rpi on LAN to send WOL
+subprocess.run(["ssh", hostname_rpi, "wakeonlan", server_win_mac])
+
+# sleep to wait for boot and wsl startup
+# cannot find an elegant way to check if wsl has started
+print("Wait for server boot ...")
+for i in trange(int(sleep_time // sleep_increment)):
+    sleep(sleep_increment)
 
 # ssh to server and read .ssh/config
 command2 = ["Get-Content", ssh_config_server]
@@ -47,7 +66,6 @@ sshconf_read = (
     .stdout.decode("utf-8")
     .splitlines()
 )
-
 
 # find hostname in server-side /.ssh/config
 matches = [x for x in enumerate(sshconf_read) if wsl_host in x[1]]
