@@ -1,0 +1,24 @@
+# config.conf generated from wsl2p-remote
+[host]
+#"Host" field in %USER%/.ssh/config eg.: "my_windows_pc"
+SERVER_WIN_HOST =
+#Windows username for windows host eg.: "john"
+SERVER_WIN_USER =
+#Windows sever ip eg: 198.168.1.42
+SERVER_WIN_IP =
+#Windows server MAC address eg.: "00-B0-D0-63-C2-26"
+SERVER_WIN_MAC =
+#"Host" field in %USER%/.ssh/config eg.: "my_wsl"
+SERVER_WSL_HOST =
+#username for wsl on host eg.: "john"
+SERVER_WSL_USER =
+
+[rpi]
+#rpi username eg.: "rpi"
+RPI_USER =
+#rpi ip eg. 192.168.1.36
+RPI_IP =
+
+[client]
+#Windows username for windows client eg.: "johnny"
+CLIENT_WIN_USER =

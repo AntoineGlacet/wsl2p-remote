@@ -1,7 +1,7 @@
 from argparse import ArgumentParser, Namespace
 
 from wsl2p_remote.client_side import run
-from wsl2p_remote.install import install, uninstall
+from wsl2p_remote.install import config, install, uninstall
 from wsl2p_remote.server_side import update
 
 
@@ -45,6 +45,14 @@ def main():
     parser_install_options = parser_install.add_mutually_exclusive_group()
     parser_install_options.add_argument("--client", action="store_true")
     parser_install_options.add_argument("--server", action="store_true")
+
+    # config
+    parser_config = subparsers.add_parser(
+        "config",
+        help="edit settings file",
+    )
+
+    parser_config.set_defaults(func=config)
 
     # uninstall
     parser_uninstall = subparsers.add_parser(

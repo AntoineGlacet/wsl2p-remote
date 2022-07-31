@@ -1,42 +1,33 @@
 import subprocess
 from argparse import Namespace
+from configparser import ConfigParser
 from pathlib import Path
 from shlex import quote
 from time import sleep
 
-from decouple import Config, RepositoryEnv
 from tqdm import trange
 
 from wsl2p_remote.utils import replace_line_with, search_string_in_file
 
 
 def run(args: Namespace):
-    # variables import from .env file
-    # should be in script arg?
-    DOTENV_FILE = Path(__file__).parent / ".." / ".env"
-    config = Config(RepositoryEnv(DOTENV_FILE))
+    # config from file
+    dotconf = Path.home() / ".config/wsl2p-remote/conf.ini"
+    config = ConfigParser()
+    config.read(dotconf)
 
     # win_host = config("SERVER_WIN_HOST")
-    wsl_host = config("SERVER_WSL_HOST")
-
-    server_win_user = config("SERVER_WIN_USER")
-    server_win_ip = config("SERVER_WIN_IP")
-    server_win_mac = config("SERVER_WIN_MAC")
-
-    rpi_ip = config("RPI_IP")
-    rpi_user = config("RPI_USER")
-
-    # server_wsl_user = config("SERVER_WSL_USER")
-    client_win_user = config("CLIENT_WIN_USER")
-
+    wsl_host = config["host"]["SERVER_WSL_HOST"]
+    server_win_user = config["host"]["SERVER_WIN_USER"]
+    server_win_ip = config["host"]["SERVER_WIN_IP"]
+    server_win_mac = config["host"]["SERVER_WIN_MAC"]
+    rpi_ip = config["rpi"]["RPI_IP"]
+    rpi_user = config["rpi"]["RPI_USER"]
+    client_win_user = config["client"]["CLIENT_WIN_USER"]
     ssh_config_client = f"/mnt/c/Users/{client_win_user}/.ssh/config"
-    ssh_config_server = r"C:\Users\{}\.ssh\config".format(
-        server_win_user,
-    )  # can't use f-string with backslash
-
-    sleep_time = args["SLEEP_TIME"]
+    ssh_config_server = r"C:\Users\{}\.ssh\config".format(server_win_user)
+    sleep_time = int(args.sleep_time)
     sleep_increment = 0.1
-
     hostname_server_win = f"{server_win_user}@{server_win_ip}"
     hostname_rpi = f"{rpi_user}@{rpi_ip}"
 

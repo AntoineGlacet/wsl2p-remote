@@ -1,21 +1,19 @@
 import subprocess
 from argparse import Namespace
+from configparser import ConfigParser
 from pathlib import Path
-
-from decouple import Config, RepositoryEnv
 
 from wsl2p_remote.utils import replace_line_with, search_string_in_file
 
 
 def update(args: Namespace):
-    # variables import from .env file
-    # should be in script arg?
-    DOTENV_FILE = Path(__file__).parent / ".." / ".env"
-    config = Config(RepositoryEnv(DOTENV_FILE))
+    # config from file
+    dotconf = Path.home() / ".config/wsl2p-remote/conf.ini"
+    config = ConfigParser()
+    config.read(dotconf)
 
-    wsl_host = config("SERVER_WSL_HOST")
-    server_win_user = config("SERVER_WIN_USER")
-
+    wsl_host = config["host"]["SERVER_WSL_HOST"]
+    server_win_user = config["host"]["SERVER_WIN_USER"]
     ssh_config_server = f"/mnt/c/Users/{server_win_user}/.ssh/config"
 
     # find server-side wsl hostname ip

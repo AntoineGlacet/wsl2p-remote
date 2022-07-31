@@ -38,6 +38,9 @@ add wake on lan to functions on client-side host windows
 clean, document, make it usable by someone in same use case rather simply.
 deal with the env, dependency and packaging...
 
+function to initialize from host and client
+
+get naming convention consistent (host/client/WOLproxy)
 
 ## format of .ssh/config
 

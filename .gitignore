@@ -87,3 +87,6 @@ target/
 
 # ipynb
 *.ipynb
+
+# temporary
+wsl2p_remote/resource/conf.ini
