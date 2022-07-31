@@ -34,7 +34,7 @@ def run(args: Namespace):
         server_win_user,
     )  # can't use f-string with backslash
 
-    sleep_time = int(config("SLEEP_TIME"))
+    sleep_time = args["SLEEP_TIME"]
     sleep_increment = 0.1
 
     hostname_server_win = f"{server_win_user}@{server_win_ip}"

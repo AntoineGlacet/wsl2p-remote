@@ -15,6 +15,26 @@ def main():
     parser.set_defaults(func=parser.printhelp)
     subparsers = parser.add_subparsers(help="sub-command help")
 
+    # run
+    parser_run = subparsers.add_parser(
+        "run",
+        help="WOL server and update client-side .ssh/config",
+    )
+    parser_run.add_argument(
+        "-t",
+        "--sleep_time",
+        help="time (s) to wait for server to boot and start WSL",
+        default=60,
+    )
+    parser_run.set_defaults(func=run)
+
+    # update
+    parser_update = subparsers.add_parser(
+        "update",
+        help="update server-side .ssh/config",
+    )
+    parser_update.set_defaults(func=update)
+
     # install
     parser_install = subparsers.add_parser(
         "install",
@@ -29,26 +49,12 @@ def main():
     # uninstall
     parser_uninstall = subparsers.add_parser(
         "uninstall",
-        help="get the system bach to original place",
+        help="get the system back to original place",
     )
     parser_uninstall_options = parser_uninstall.add_mutually_exclusive_group()
     parser_uninstall_options.add_argument("--client", action="store_true")
     parser_uninstall_options.add_argument("--server", action="store_true")
     parser_uninstall_options.set_defaults(func=uninstall)
-
-    # run
-    parser_run = subparsers.add_parser(
-        "run",
-        help="send WOL packet and update server ip",
-    )
-    parser_run.set_defaults(func=run)
-
-    # update
-    parser_update = subparsers.add_parser(
-        "update",
-        help="update wsl_server ip to server .ssh/config",
-    )
-    parser_update.set_defaults(func=update)
 
     args = parser.parse_args()
     args.func(args)

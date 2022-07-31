@@ -33,3 +33,8 @@ def uninstall(args: Namespace):
         """,
         )
     return
+
+
+def config(args: Namespace):
+    # interactive config and info
+    return
