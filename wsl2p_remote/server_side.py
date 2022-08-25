@@ -17,10 +17,15 @@ def update(args: Namespace):
     ssh_config_server = f"/mnt/c/Users/{server_win_user}/.ssh/config"
 
     # find server-side wsl hostname ip
-    new_hostip = subprocess.run(["hostname", "-I"], capture_output=True).stdout.decode(
-        "utf-8",
+    new_hostip = (
+        subprocess.run(["hostname", "-I"], capture_output=True)
+        .stdout.decode(
+            "utf-8",
+        )
+        .split(" ")[0]
     )
-    new_line = f"    Hostname {new_hostip}"
+    nl = "\n"
+    new_line = f"    Hostname {new_hostip}{nl}"
 
     # write to server-side /.ssh/config
     matches = search_string_in_file(
